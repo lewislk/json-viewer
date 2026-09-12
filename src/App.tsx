@@ -133,17 +133,25 @@ export default function App() {
     setActiveMatchIdx(searchData.matches.length > 0 ? 0 : -1);
   }
 
-  // 搜索跳转（Enter / Shift+Enter）切换 active match 时，同步更新 selectedPath，
-  // 让右侧 PropPanel 也展示当前活跃匹配项的内容，与树的高亮行保持一致。
-  // 仅在有有效 active match 时同步；无结果（-1）时保留原 selectedPath。
-  const [prevActiveMatchIdx, setPrevActiveMatchIdx] = useState(activeMatchIdx);
+  // 搜索跳转（Enter / Shift+Enter）或新搜索到来时，同步更新 selectedPath，
+  // 让右侧 PropPanel 始终展示当前活跃匹配项的内容，与树的高亮行保持一致。
+  // 触发条件用「active match 的路径」而不是「索引」：
+  // 搜两次不同关键词都会被重置为 idx=0，索引比较会漏掉这种"内容已变"的场景。
+  // 仅在有有效 active match 时同步；无结果（idx=-1）时保留原 selectedPath。
+  const activeMatchPath =
+    activeMatchIdx >= 0 && activeMatchIdx < searchData.matches.length
+      ? searchData.matches[activeMatchIdx].path
+      : null;
+  const [prevActiveMatchPath, setPrevActiveMatchPath] = useState<string | null>(
+    activeMatchPath,
+  );
   if (
-    prevActiveMatchIdx !== activeMatchIdx &&
+    prevActiveMatchPath !== activeMatchPath &&
     activeMatchIdx >= 0 &&
     activeMatchIdx < searchData.matches.length
   ) {
-    setPrevActiveMatchIdx(activeMatchIdx);
-    setSelectedPath(searchData.matches[activeMatchIdx].path);
+    setPrevActiveMatchPath(activeMatchPath);
+    setSelectedPath(activeMatchPath);
   }
 
   // 有效的展开路径 = 用户展开 ∪ 搜索自动展开

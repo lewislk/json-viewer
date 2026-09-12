@@ -1,0 +1,127 @@
+{
+  "api": {
+    "name": "JSON Viewer Demo API",
+    "version": "2.3.0",
+    "endpoint": "https://api.example.com/v2",
+    "rateLimit": {
+      "requests": 1000,
+      "window": "1h",
+      "remaining": 942,
+      "resetAt": "2026-09-11T15:30:00Z"
+    }
+  },
+  "project": {
+    "id": "proj_8f2k3j4h5j6k7",
+    "name": "JSON Viewer",
+    "description": "一个 macOS 风格的本地 JSON 浏览器，支持折叠树、搜索、属性预览",
+    "tags": ["json", "viewer", "macOS", "react", "typescript"],
+    "repository": {
+      "url": "https://github.com/example/json-viewer",
+      "stars": 1284,
+      "forks": 87,
+      "issues": {
+        "open": 12,
+        "closed": 156,
+        "lastUpdated": "2026-09-10"
+      }
+    },
+    "license": "MIT",
+    "languages": {
+      "TypeScript": 78.4,
+      "CSS": 15.2,
+      "HTML": 6.4
+    }
+  },
+  "users": [
+    {
+      "id": 1001,
+      "username": "alice",
+      "email": "alice@example.com",
+      "active": true,
+      "role": "admin",
+      "joinedAt": "2024-03-15T08:00:00Z",
+      "preferences": {
+        "theme": "dark",
+        "notifications": {
+          "email": true,
+          "push": false,
+          "sms": null
+        }
+      }
+    },
+    {
+      "id": 1002,
+      "username": "bob",
+      "email": "bob@example.com",
+      "active": true,
+      "role": "developer",
+      "joinedAt": "2024-05-22T10:30:00Z",
+      "preferences": {
+        "theme": "light",
+        "notifications": {
+          "email": true,
+          "push": true,
+          "sms": false
+        }
+      }
+    },
+    {
+      "id": 1003,
+      "username": "carol_李",
+      "email": null,
+      "active": false,
+      "role": "viewer",
+      "joinedAt": "2024-08-01T14:45:00Z",
+      "preferences": null
+    }
+  ],
+  "activity": [
+    {
+      "type": "commit",
+      "user": "alice",
+      "timestamp": "2026-09-11T09:15:23Z",
+      "message": "feat: 拖拽分隔条"
+    },
+    {
+      "type": "issue",
+      "user": "bob",
+      "timestamp": "2026-09-10T16:42:11Z",
+      "message": "fix: 解析空字符串"
+    },
+    {
+      "type": "release",
+      "user": "system",
+      "timestamp": "2026-09-09T12:00:00Z",
+      "message": "v2.3.0"
+    }
+  ],
+  "config": {
+    "features": {
+      "search": true,
+      "treeView": true,
+      "export": false,
+      "experimental": {
+        "syntaxHighlight": true,
+        "splitView": false
+      }
+    },
+    "limits": {
+      "maxFileSize": 10485760,
+      "maxDepth": 32,
+      "timeout": 30000
+    },
+    "empty": {},
+    "emptyArray": []
+  },
+  "edgeCases": {
+    "unicode": "你好，世界 🌍 こんにちは",
+    "escaped": "Line 1\nLine 2\tTabbed\"Quoted\"",
+    "longString": "这是一段很长的字符串，用于测试属性面板中的文本截断和等宽字体显示效果，应该会完整呈现并支持滚动查看完整内容。",
+    "scientific": 1.23e-10,
+    "negative": -273.15,
+    "zero": 0,
+    "pi": 3.141592653589793,
+    "emptyStr": "",
+    "specialChars": "!@#$%^&*()_+-=[]{}|;':\",./<>?"
+  }
+}

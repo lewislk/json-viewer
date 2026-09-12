@@ -1,0 +1,213 @@
+.prop-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  background: #fff;
+}
+
+/* === 面板头 === */
+.prop-panel-head {
+  flex: none;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 12px;
+  background: linear-gradient(#fafafb, #f3f3f5);
+  border-bottom: 1px solid var(--line);
+  user-select: none;
+}
+
+.prop-panel-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #3a3a3f;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* === 面板体 === */
+.prop-panel-body {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+  position: relative;
+  background: #fff;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* === 单个属性字段 === */
+.prop-panel-field {
+  margin-bottom: 15px;
+}
+
+.prop-panel-field-label {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prop-panel-name {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: #1d1d1f;
+  word-break: break-all;
+}
+
+.prop-panel-path {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #5e5e66;
+  background: #f6f6f8;
+  border: 1px solid #ececf0;
+  border-radius: 6px;
+  padding: 5px 8px;
+  word-break: break-all;
+  line-height: 1.5;
+}
+
+/* === 类型 badge === */
+.prop-panel-badge {
+  display: inline-flex;
+  align-items: center;
+  height: 18px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  font-family: var(--sans);
+}
+
+.prop-panel-badge-string {
+  background: #e4f3e7;
+  color: #1e7a36;
+}
+
+.prop-panel-badge-number {
+  background: #e6edfd;
+  color: #1f4fbe;
+}
+
+.prop-panel-badge-boolean {
+  background: #f4e9fb;
+  color: #8e24aa;
+}
+
+.prop-panel-badge-null {
+  background: #ececee;
+  color: #6e6e76;
+}
+
+.prop-panel-badge-object {
+  background: #fff1de;
+  color: #b26a00;
+}
+
+.prop-panel-badge-array {
+  background: #e3f5fa;
+  color: #0e7490;
+}
+
+/* === 基础类型值卡片 === */
+.prop-panel-value-card {
+  position: relative;
+  background: #f8f8fa;
+  border: 1px solid #e8e8ec;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: #26262b;
+  white-space: pre-wrap;
+  word-break: break-all;
+  line-height: 1.65;
+}
+
+/* === 对象/数组预览卡片 === */
+.prop-panel-placeholder-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 28px 16px;
+  border: 1.5px dashed #d4d6dd;
+  border-radius: 12px;
+  background: #fbfbfd;
+  text-align: center;
+}
+
+.prop-panel-placeholder-empty {
+  min-height: 240px;
+  justify-content: center;
+  border-style: dashed;
+}
+
+.prop-panel-placeholder-icon {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  align-items: center;
+  justify-content: center;
+  color: #9aa0aa;
+  stroke-width: 1.4;
+}
+
+.prop-panel-ph-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #4a4a52;
+  font-family: var(--mono);
+}
+
+.prop-panel-ph-sub {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.6;
+}
+
+.prop-panel-ph-preview {
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: #6f6f79;
+  background: #fff;
+  border: 1px solid #ececf0;
+  border-radius: 8px;
+  padding: 8px 11px;
+  max-width: 100%;
+  word-break: break-all;
+  line-height: 1.7;
+}
+
+/* === 复制按钮（同时用于 valueCard 和 objectPreview） === */
+.prop-panel-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 20px;
+  padding: 0 8px;
+  font-size: 11px;
+  color: #5b5b63;
+  background: #fff;
+  border: 1px solid #d9d9de;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: var(--sans);
+}
+
+.prop-panel-copy-btn:hover {
+  background: #f2f2f5;
+}

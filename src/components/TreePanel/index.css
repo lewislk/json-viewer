@@ -1,0 +1,209 @@
+.tree-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  background: #fff;
+}
+
+/* === 面板头（与 RawPanel 共享的样式集中放这里一份） === */
+.tree-panel-head {
+  flex: none;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 12px;
+  background: linear-gradient(#fafafb, #f3f3f5);
+  border-bottom: 1px solid var(--line);
+  user-select: none;
+}
+
+.tree-panel-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #3a3a3f;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.tree-panel-tools {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* === 工具按钮 === */
+.tree-panel-tbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 24px;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #333338;
+  background: #fff;
+  border: 1px solid #d3d3d8;
+  border-radius: 6px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.12s, border-color 0.12s;
+  font-family: var(--sans);
+}
+
+.tree-panel-tbtn:hover {
+  background: #f4f4f6;
+  border-color: #c6c6cd;
+}
+
+.tree-panel-tbtn:active {
+  background: #e9e9ed;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.tree-panel-tbtn:focus-visible {
+  outline: 2px solid rgba(0, 122, 255, 0.45);
+  outline-offset: 1px;
+}
+
+/* === 仅图标工具按钮（查找上一个/下一个） === */
+.tree-panel-tbtn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: #333338;
+  background: #fff;
+  border: 1px solid #d3d3d8;
+  border-radius: 6px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.tree-panel-tbtn-icon:hover:not(:disabled) {
+  background: #f4f4f6;
+  border-color: #c6c6cd;
+}
+
+.tree-panel-tbtn-icon:active:not(:disabled) {
+  background: #e9e9ed;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.tree-panel-tbtn-icon:focus-visible {
+  outline: 2px solid rgba(0, 122, 255, 0.45);
+  outline-offset: 1px;
+}
+
+.tree-panel-tbtn-icon:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* === 搜索框（SearchBox 子组件用） === */
+.tree-panel-sbox {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tree-panel-sbox-ico {
+  position: absolute;
+  left: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 13px;
+  stroke: #9a9aa2;
+  pointer-events: none;
+}
+
+.tree-panel-sbox-input {
+  height: 24px;
+  width: 120px;
+  padding: 0 8px 0 26px;
+  font-size: 12px;
+  color: var(--text);
+  background: #fff;
+  border: 1px solid #d3d3d8;
+  border-radius: 6px;
+  outline: none;
+  transition: width 0.18s, border-color 0.12s, box-shadow 0.12s;
+  font-family: var(--sans);
+}
+
+.tree-panel-sbox-input:focus {
+  width: 172px;
+  border-color: #8ab8ff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+}
+
+.tree-panel-sbox-input::placeholder {
+  color: #b4b4bc;
+}
+
+.tree-panel-sbox-count {
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: var(--text3);
+  pointer-events: none;
+  font-family: var(--sans);
+}
+
+@media (max-width: 980px) {
+  .tree-panel-sbox-input:focus {
+    width: 140px;
+  }
+}
+
+@media (max-width: 640px) {
+  .tree-panel-sbox-input {
+    font-size: 16px;
+  }
+}
+
+/* === 树区域 === */
+.tree-panel-body {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+  position: relative;
+  background: #fff;
+  padding: 10px 8px 16px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.65;
+  user-select: none;
+  min-width: max-content;
+}
+
+/* === 状态栏 === */
+.tree-panel-status {
+  flex: none;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 12px;
+  font-size: 11px;
+  color: var(--text3);
+  background: #f8f8fa;
+  border-top: 1px solid var(--line);
+  user-select: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.tree-panel-sep {
+  color: #dcdce1;
+}

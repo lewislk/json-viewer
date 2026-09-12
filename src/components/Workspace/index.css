@@ -1,0 +1,91 @@
+.workspace-root {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  position: relative;
+  background: #fff;
+}
+
+.workspace-panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #fff;
+}
+
+.workspace-panel + .workspace-panel {
+  border-left: 1px solid var(--line);
+}
+
+.workspace-prop-panel {
+  flex: 3 1 0;
+  min-width: 230px;
+}
+
+/* === 分隔条 === */
+.workspace-splitter {
+  flex: none;
+  width: 7px;
+  cursor: col-resize;
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
+
+.workspace-splitter::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #e4e4e9;
+  transition: background 0.15s;
+}
+
+.workspace-splitter:hover::before,
+.workspace-splitter-dragging.workspace-splitter::before {
+  background: #c3c6d2;
+  width: 2px;
+  left: 2.5px;
+}
+
+.workspace-splitter-dragging.workspace-splitter {
+  background: rgba(0, 122, 255, 0.05);
+}
+
+body.dragging {
+  user-select: none;
+  cursor: col-resize;
+}
+
+@media (max-width: 980px) {
+  .workspace-root {
+    flex-direction: column;
+    overflow: auto;
+  }
+
+  .workspace-splitter {
+    display: none;
+  }
+
+  /* 每个 panel 在纵向模式下固定一个 vh 高度，比例与原型一致：
+     raw 46vh / tree 44vh / prop 46vh。inline style 的 flex-basis 在此被 !important 覆盖。 */
+  .workspace-panel {
+    flex: 0 0 46vh !important;
+  }
+
+  .workspace-panel:nth-child(3) {
+    /* tree 中间栏略小 */
+    flex-basis: 44vh !important;
+  }
+
+  .workspace-prop-panel {
+    min-width: 0;
+  }
+
+  .workspace-panel + .workspace-panel {
+    border-left: none;
+    border-top: 1px solid var(--line);
+  }
+}

@@ -1,0 +1,156 @@
+.tree-view-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1.5px 10px 1.5px calc(var(--depth) * 16px + 8px);
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tree-view-row:hover {
+  background: #f2f4f8;
+}
+
+.tree-view-row.tree-view-row-selected {
+  background: var(--sel);
+}
+
+.tree-view-row.tree-view-row-selected::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 22%;
+  bottom: 22%;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  opacity: 0.9;
+}
+
+.tree-view-row.tree-view-row-active {
+  background: #fff0c2;
+}
+
+.tree-view-gline {
+  position: absolute;
+  left: calc(var(--depth) * 16px + 4px);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #ececf1;
+  pointer-events: none;
+}
+
+.tree-view-twisty {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: #8e8e96;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+}
+
+.tree-view-twisty svg {
+  width: 9px;
+  height: 9px;
+  transition: transform 0.12s;
+}
+
+.tree-view-twisty.tree-view-twisty-open svg {
+  transform: rotate(90deg);
+}
+
+.tree-view-twisty:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+.tree-view-spacer {
+  flex: none;
+  width: 16px;
+  height: 14px;
+}
+
+.tree-view-k {
+  color: #1d1d1f;
+  font-weight: 600;
+}
+
+.tree-view-k-idx {
+  color: #9a9aa2;
+  font-weight: 400;
+}
+
+.tree-view-punct {
+  color: #b8b8c0;
+  margin: 0 2px;
+}
+
+.tree-view-v {
+  /* type-specific colors set by tree-view-v-* classes */
+}
+
+.tree-view-v-string {
+  color: #0f7b34;
+}
+
+.tree-view-v-number {
+  color: #0b57d0;
+}
+
+.tree-view-v-boolean {
+  color: #8e24aa;
+}
+
+.tree-view-v-null {
+  color: #8e8e96;
+  font-style: italic;
+}
+
+.tree-view-obj-bracket,
+.tree-view-open-bracket {
+  color: #9a9aa2;
+}
+
+.tree-view-cnt {
+  flex: none;
+  margin-left: 6px;
+  font-size: 10.5px;
+  color: #8a8a92;
+  background: #f0f0f3;
+  border-radius: 999px;
+  padding: 0 7px;
+  line-height: 15px;
+  font-family: var(--sans);
+}
+
+.tree-view-mark {
+  background: #ffe9a8;
+  border-radius: 2px;
+  color: inherit;
+  padding: 0;
+}
+
+.tree-view-close-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1.5px 10px 1.5px calc(var(--depth) * 16px + 8px);
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: #9a9aa2;
+}
+
+.tree-view-close-row:hover {
+  background: #f2f4f8;
+}

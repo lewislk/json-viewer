@@ -162,6 +162,44 @@ src/
 
 文件命名：`<被测文件名>.test.ts(x)` 或 `<被测文件名>.spec.ts(x)`，同一项目内**只用一种**。
 
+### 1.7 测试 Runner
+
+**选型**：vitest（与 Vite 共享配置 / transformer，零额外构建链）。
+
+**配置位置**：`vite.config.ts` 同文件加 `test` 块，避免新增 `vitest.config.ts`：
+
+```ts
+/// <reference types="vitest/config" />
+export default defineConfig({
+  plugins: [...],
+  test: {
+    environment: 'node',                       // 纯函数工具默认 node；组件测试切 jsdom
+    include: ['src/**/*.test.{ts,tsx}'],
+  },
+})
+```
+
+**TypeScript**：测试文件被 `tsconfig.app.json` 覆盖（`include: ["src"]`），**不**额外
+打开 vitest globals——统一 `import { describe, it, expect } from 'vitest'`，与项目
+`verbatimModuleSyntax: true` 约束一致。
+
+**脚本**（`package.json`）：
+
+```json
+"scripts": {
+  "test": "vitest run",
+  "test:watch": "vitest"
+}
+```
+
+**读取静态资源**：测试里要读 `data/*.json` 时用 Vite 的 `?raw`（`import demo from
+'../data/demo.json?raw'`），不要走 `node:fs`，避免引入 node 类型依赖（测试在
+`tsconfig.app.json` 下，不在 `tsconfig.node.json` 下）。
+
+**ESLint**：测试文件会被现有 `eslint.config.js` 的 `**/*.{ts,tsx}` glob 扫到；纯函数
+测试不导出组件，不会触发 `react-refresh/only-export-components`。若确实误报，把
+测试文件加进 `globalIgnores(['**/*.test.{ts,tsx}'])`。
+
 ---
 
 ## 2. 文件命名规范（强制）

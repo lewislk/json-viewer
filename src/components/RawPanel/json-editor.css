@@ -1,6 +1,10 @@
 .raw-panel-body {
+  /* 在 .raw-panel 的 flex column 布局里只占剩余空间，避免被长内容把 head /
+     status 顶出屏幕；min-height: 0 允许内部 textarea 正确收缩并触发 overflow:auto */
+  flex: 1 1 0;
+  min-height: 0;
   display: flex;
-  height: 100%;
+  overflow: hidden;
 }
 
 .raw-panel-gutter {

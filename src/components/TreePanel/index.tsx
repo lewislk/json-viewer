@@ -29,13 +29,21 @@ export function TreePanel(props: TreePanelProps) {
   const searchRef = useRef<SearchBoxHandle>(null);
 
   // ⌘F / Ctrl+F 聚焦搜索框
+  // 当焦点落在原始视图（RawPanel）内时，跳过拦截、把按键交给浏览器原生查找弹窗，
+  // 这样搜的就是 textarea 里的原始文本而不是格式化视图。
   useGlobalShortcut(
     "f",
     () => {
       searchRef.current?.focus();
       searchRef.current?.select();
     },
-    { withMod: true },
+    {
+      withMod: true,
+      skipWhen: () => {
+        const active = document.activeElement;
+        return !!active && active.closest(".raw-panel") !== null;
+      },
+    },
   );
 
   const searchCountText = useMemo(() => {

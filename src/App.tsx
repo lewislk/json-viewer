@@ -133,6 +133,19 @@ export default function App() {
     setActiveMatchIdx(searchData.matches.length > 0 ? 0 : -1);
   }
 
+  // 搜索跳转（Enter / Shift+Enter）切换 active match 时，同步更新 selectedPath，
+  // 让右侧 PropPanel 也展示当前活跃匹配项的内容，与树的高亮行保持一致。
+  // 仅在有有效 active match 时同步；无结果（-1）时保留原 selectedPath。
+  const [prevActiveMatchIdx, setPrevActiveMatchIdx] = useState(activeMatchIdx);
+  if (
+    prevActiveMatchIdx !== activeMatchIdx &&
+    activeMatchIdx >= 0 &&
+    activeMatchIdx < searchData.matches.length
+  ) {
+    setPrevActiveMatchIdx(activeMatchIdx);
+    setSelectedPath(searchData.matches[activeMatchIdx].path);
+  }
+
   // 有效的展开路径 = 用户展开 ∪ 搜索自动展开
   const expandedPaths = useMemo(() => {
     const combined = new Set(userExpandedPaths);

@@ -99,6 +99,17 @@ describe('unescapeText', () => {
     expect(unescapeText('not json')).toBe('not json');
   });
 
+  it('format → escapeText → unescapeText 还原原文本（回归用例）', () => {
+    // 模拟 RawPanel 的「删空转义」→「去除转义」流程。escapeText 输出的文本不是
+    // 合法 JSON，unescapeText 的旧回退路径会按字符串层乱解 \\n / \\t 把裸 LF / TAB
+    // 塞进 JSON 字符串值，得到非法 JSON。这里验证：往返一次回到原 formatted JSON。
+    const formatted = format(DEMO);
+    const escaped = escapeText(formatted);
+    const restored = unescapeText(escaped);
+    expect(() => JSON.parse(restored)).not.toThrow();
+    expect(restored).toBe(formatted);
+  });
+
   it('含 \\b \\f 等控制字符转义也能正确反转义', () => {
     // \b \f 是 JSON 合法转义；旧 unescapeString 不处理，新实现走 JSON.parse 路径天然支持
     const input = JSON.stringify({ a: 'x\by\fz' });

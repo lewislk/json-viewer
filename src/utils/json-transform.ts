@@ -4,8 +4,9 @@
  * 设计原则：
  * - `format` 严格要求输入是合法 JSON，否则抛 `SyntaxError`（外层 RawPanel
  *   用 toast 兜住）。
- * - `unescapeText` 优先走 `format`；输入不合法时回退到 `unescapeString`
- *   （字符串层最优努力），覆盖"整篇文本被当成字符串转义保存"的场景。
+ * - `unescapeText` 有三级回退（详见函数内 JSDoc）：
+ *   合法 JSON → `format`；`escapeText` 输出 → 解开 `escapeString` 包裹后
+ *   再 `format`；其他 → `unescapeString` 字符串层反向解码。
  * - `minify` / `escapeText` 在输入不合法时同样回退到「字符串层面」处理。
  */
 
@@ -37,20 +38,42 @@ export function escapeText(text: string): string {
 /**
  * 解析为 JSON 后重新以 2 空格缩进格式化。
  *
- * 旧实现是在字符串层全局替换 `\"` `\n` `\t` `\\uXXXX`，会把 JSON 文档本身
- * 的结构性引号也反转义，破坏语法（例如示例数据 line 118 报控制字符）。
- * 本实现：输入合法 JSON 时走 `format`——`JSON.parse` 已经把所有 string 字段值
- * 的两字符转义序列（`\n` `\t` `\"` `\\` `\uXXXX`）解成真字符，`JSON.stringify`
- * 输出时再以字面形式写出，得到的仍是合法 JSON，textarea 多行展示时换行 / Tab
- * 可见；输入不合法时退回到 `unescapeString`（按顺序处理 `\\u` → `\\n` → ... →
- * `\\\\`），用作「整篇文本被当成字符串转义保存」场景的最优努力处理。
+ * 三级回退路径：
+ * 1. `format` 路径：输入是合法 JSON，直接 `JSON.parse` + `JSON.stringify`。
+ *    `JSON.parse` 已把所有 string 字段值的两字符转义序列（`\n` `\t` `\"`
+ *    `\\` `\uXXXX`）解成真字符，`JSON.stringify` 输出时再以字面形式写出，
+ *    得到的仍是合法 JSON，textarea 多行展示时换行 / Tab 可见。
+ *
+ * 2. `escapeText` 反向路径：输入是 `escapeText` 处理过的 JSON 文档。
+ *    `escapeText` 的输出特征是 `JSON.stringify(...)` 外面套了两层包裹——所有
+ *    `\` 都被加倍成 `\\`、所有 `"` 都被转义成 `\"`，但没有裸 LF / CR / Tab。
+ *    反向操作是依次把 `\"` 还原成 `"`、`\\` 还原成 `\`；得到的中间结果就是
+ *    `JSON.stringify(JSON.parse(orig))`，重新 `format` 即得。这一步主要
+ *    服务「删空转义」→「去除转义」的还原场景。
+ *
+ * 3. `unescapeString` 路径：兜底覆盖「整篇文本被当成字符串转义保存」的
+ *    场景——按 `\\u` → `\\n` → ... → `\\\\` 的顺序做字符串层反向解码。
  */
 export function unescapeText(text: string): string {
   try {
     return format(text);
   } catch {
-    return unescapeString(text);
+    try {
+      return format(unescapeEscapeWrapping(text));
+    } catch {
+      return unescapeString(text);
+    }
   }
+}
+
+/**
+ * 还原 `escapeString` 在合法 JSON 字符串外面套的两层包裹。
+ * 即把 `\"` 还原成 `"`，再把 `\\` 还原成 `\`。两个步骤的相对顺序与各自匹配
+ * 互不干扰：先 `\"` → `"` 后 `\\` → `\` 可以让 `\\\"` → `\\"` → `\"`，反之
+ * `\\\"` → `\\"` → `\"`，结果相同。
+ */
+function unescapeEscapeWrapping(s: string): string {
+  return s.replace(/\\"/g, '"').replace(/\\\\/g, '\\');
 }
 
 /**
